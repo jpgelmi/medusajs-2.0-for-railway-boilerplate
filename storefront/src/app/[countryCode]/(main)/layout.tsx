@@ -13,6 +13,7 @@ export default async function PageLayout(props: { children: React.ReactNode }) {
     <>
       <Nav />
       {props.children}
+      {console.log("hola")}
       <Footer />
     </>
   )
