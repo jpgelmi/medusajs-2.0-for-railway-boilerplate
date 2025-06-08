@@ -21,7 +21,12 @@ import {
   MINIO_SECRET_KEY,
   MINIO_BUCKET,
   MEILISEARCH_HOST,
-  MEILISEARCH_ADMIN_KEY
+  MEILISEARCH_ADMIN_KEY,
+  // Agregar las constantes de PayPal
+  PAYPAL_CLIENT_ID,
+  PAYPAL_CLIENT_SECRET,
+  PAYPAL_SANDBOX,
+  PAYPAL_AUTH_WEBHOOK_ID
 } from 'lib/constants';
 
 loadEnv(process.env.NODE_ENV, process.cwd());
@@ -112,19 +117,32 @@ const medusaConfig = {
         ]
       }
     }] : []),
-    ...(STRIPE_API_KEY && STRIPE_WEBHOOK_SECRET ? [{
+    // Módulo de Payment actualizado para incluir PayPal
+    ...((STRIPE_API_KEY && STRIPE_WEBHOOK_SECRET) || (PAYPAL_CLIENT_ID && PAYPAL_CLIENT_SECRET) ? [{
       key: Modules.PAYMENT,
       resolve: '@medusajs/payment',
       options: {
         providers: [
-          {
+          // Stripe (si está configurado)
+          ...(STRIPE_API_KEY && STRIPE_WEBHOOK_SECRET ? [{
             resolve: '@medusajs/payment-stripe',
             id: 'stripe',
             options: {
               apiKey: STRIPE_API_KEY,
               webhookSecret: STRIPE_WEBHOOK_SECRET,
             },
-          },
+          }] : []),
+          // PayPal (si está configurado)
+          ...(PAYPAL_CLIENT_ID && PAYPAL_CLIENT_SECRET ? [{
+            resolve: './src/providers/payment/paypal-payment',
+            id: 'paypal',
+            options: {
+              client_id: PAYPAL_CLIENT_ID,
+              client_secret: PAYPAL_CLIENT_SECRET,
+              sandbox: PAYPAL_SANDBOX,
+              auth_webhook_id: PAYPAL_AUTH_WEBHOOK_ID,
+            },
+          }] : []),
         ],
       },
     }] : [])

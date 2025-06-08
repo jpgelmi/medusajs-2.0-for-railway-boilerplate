@@ -20,10 +20,10 @@ export const getCollectionsList = cache(async function (
 
 export const getCollectionByHandle = cache(async function (
   handle: string
-): Promise<HttpTypes.StoreCollection> {
+): Promise<HttpTypes.StoreCollection | null> {
   return sdk.store.collection
-    .list({ handle }, { next: { tags: ["collections"] } })
-    .then(({ collections }) => collections[0])
+    .list({ handle: [handle] }, { next: { tags: ["collections"] } }) // ← Array en lugar de string
+    .then(({ collections }) => collections[0] || null) // ← Agregar || null para manejar undefined
 })
 
 export const getCollectionsWithProducts = cache(
@@ -34,29 +34,45 @@ export const getCollectionsWithProducts = cache(
       return null
     }
 
-    const collectionIds = collections
-      .map((collection) => collection.id)
-      .filter(Boolean) as string[]
+    // Obtener productos para cada colección usando el SDK correctamente
+    const collectionsWithProducts = await Promise.all(
+      collections.map(async (collection) => {
+        if (!collection.id) return collection
 
-    const { response } = await getProductsList({
-      queryParams: { collection_id: collectionIds },
-      countryCode,
-    })
+        try {
+          // Usar el SDK directamente para filtrar por collection_id
+          const region = await sdk.store.region.list({ limit: 1 }).then(({ regions }) => regions[0])
+          
+          if (!region) return collection
 
-    response.products.forEach((product) => {
-      const collection = collections.find(
-        (collection) => collection.id === product.collection_id
-      )
+          const { products } = await sdk.store.product.list({
+            collection_id: [collection.id], // Usar collection_id en el SDK directamente
+            region_id: region.id,
+            limit: 10,
+            fields: "*variants.calculated_price"
+          }, { next: { tags: ["products"] } })
 
-      if (collection) {
-        if (!collection.products) {
-          collection.products = []
+          return {
+            ...collection,
+            products: products || []
+          }
+        } catch (error) {
+          console.warn(`Error fetching products for collection ${collection.id}:`, error)
+          return {
+            ...collection,
+            products: []
+          }
         }
+      })
+    )
 
-        collection.products.push(product as any)
-      }
-    })
-
-    return collections as unknown as HttpTypes.StoreCollection[]
+    return collectionsWithProducts as unknown as HttpTypes.StoreCollection[]
   }
 )
+
+// Función simple para la navegación
+export const getCollections = cache(async function () {
+  return sdk.store.collection
+    .list({}, { next: { tags: ["collections"] } })
+    .then(({ collections }) => collections)
+})

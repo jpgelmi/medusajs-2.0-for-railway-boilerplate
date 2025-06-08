@@ -22,7 +22,6 @@ export const getCategoriesList = cache(async function (
 export const getCategoryByHandle = cache(async function (
   categoryHandle: string[]
 ) {
-
   return sdk.store.category.list(
     // TODO: Look into fixing the type
     // @ts-ignore

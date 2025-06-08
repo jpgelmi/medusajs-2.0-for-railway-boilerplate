@@ -18,6 +18,12 @@ const Login = ({ setCurrentView }: Props) => {
       className="max-w-sm w-full flex flex-col items-center"
       data-testid="login-page"
     >
+      <img
+        src="/images/logo.png"
+        alt="Logo"
+        className="mb-6 w-24 h-auto"
+        data-testid="logo"
+      />
       <h1 className="text-large-semi uppercase mb-6">Welcome back</h1>
       <p className="text-center text-base-regular text-ui-fg-base mb-8">
         Sign in to access an enhanced shopping experience.

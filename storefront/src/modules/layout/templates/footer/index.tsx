@@ -165,26 +165,6 @@ export default async function Footer() {
                     Guía de Tallas
                   </LocalizedClientLink>
                 </li>
-                <li>
-                  <a
-                    href="https://docs.medusajs.com"
-                    target="_blank"
-                    rel="noreferrer"
-                    className="text-gray-400 hover:text-white transition-colors font-medium"
-                  >
-                    Documentación
-                  </a>
-                </li>
-                <li>
-                  <a
-                    href="https://github.com/medusajs/nextjs-starter-medusa"
-                    target="_blank"
-                    rel="noreferrer"
-                    className="text-gray-400 hover:text-white transition-colors font-medium"
-                  >
-                    Código Fuente
-                  </a>
-                </li>
               </ul>
             </div>
           </div>
