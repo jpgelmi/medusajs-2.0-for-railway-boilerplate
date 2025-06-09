@@ -1,6 +1,7 @@
 import { Metadata } from "next"
 import FeaturedProducts from "@modules/home/components/featured-products"
 import Hero from "@modules/home/components/hero"
+import PromotionalBanner from "@modules/home/components/promotional-banner"
 import { getCollectionsWithProducts } from "@lib/data/collections"
 import { getRegion } from "@lib/data/regions"
 
@@ -24,7 +25,13 @@ export default async function Home({
 
   return (
     <>
+      {/* Hero Section Original */}
       <Hero />
+
+      {/* Promotional Banner - DESPUÉS DEL HERO */}
+      <PromotionalBanner />
+
+      {/* Featured Products Section */}
       {collections && collections.length > 0 && region && (
         <div className="py-12">
           <ul className="flex flex-col gap-x-6">
@@ -32,6 +39,8 @@ export default async function Home({
           </ul>
         </div>
       )}
+
+      {/* Empty State */}
       {(!collections || collections.length === 0) && (
         <div className="py-12 text-center">
           <h2 className="text-2xl font-bold mb-4">¡Próximamente!</h2>

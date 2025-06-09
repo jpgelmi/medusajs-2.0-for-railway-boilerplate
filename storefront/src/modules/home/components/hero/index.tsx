@@ -12,16 +12,16 @@ const Hero = () => {
   // Slides con diferentes productos destacados
   const slides = [
     {
-      image: "/images/runners-1.png",
-      title: "CORRE COMO UN",
-      highlight: "CAMPEÓN",
-      subtitle: "Zapatillas de running profesionales con tecnología de amortiguación avanzada",
+      image: "/images/hero-1.png",
+      title: "CORRE COMO",
+      highlight: "PROFESIONAL",
+      subtitle: "Indumentaria de running profesionales con tecnología de amortiguación avanzada",
       cta: "EXPLORAR RUNNING",
       link: "/categories/zapatillas",
       badge: "NUEVO"
     },
     {
-      image: "/images/spikes-hero.jpg", // Asegúrate de tener esta imagen
+      image: "/images/hero-2.png", // Asegúrate de tener esta imagen
       title: "VELOCIDAD",
       highlight: "EXPLOSIVA",
       subtitle: "Zapatillas de clavos para pista - Máximo rendimiento en competición",
@@ -30,7 +30,7 @@ const Hero = () => {
       badge: "⚡ ÉLITE"
     },
     {
-      image: "/images/training-hero.jpg", // Asegúrate de tener esta imagen
+      image: "/images/hero-3.png", // Asegúrate de tener esta imagen
       title: "ENTRENA SIN",
       highlight: "LÍMITES",
       subtitle: "Ropa técnica diseñada para atletas de alto rendimiento",
@@ -200,7 +200,7 @@ const Hero = () => {
             >
               <div className="aspect-[3/4] relative">
                 <Image
-                  src="/images/men-category.jpg"
+                  src="/images/men-category.png"
                   alt="Hombres"
                   fill
                   className="object-cover group-hover:scale-110 transition-transform duration-500"
@@ -220,7 +220,7 @@ const Hero = () => {
             >
               <div className="aspect-[3/4] relative">
                 <Image
-                  src="/images/women-category.jpg"
+                  src="/images/women-category.png"
                   alt="Mujeres"
                   fill
                   className="object-cover group-hover:scale-110 transition-transform duration-500"
@@ -240,7 +240,7 @@ const Hero = () => {
             >
               <div className="aspect-[3/4] relative">
                 <Image
-                  src="/images/shoes-category.jpg"
+                  src="/images/shoes-category.png"
                   alt="Zapatillas"
                   fill
                   className="object-cover group-hover:scale-110 transition-transform duration-500"
@@ -260,7 +260,7 @@ const Hero = () => {
             >
               <div className="aspect-[3/4] relative">
                 <Image
-                  src="/images/spikes-category.jpg"
+                  src="/images/spikes-category.png"
                   alt="Clavos"
                   fill
                   className="object-cover group-hover:scale-110 transition-transform duration-500"
