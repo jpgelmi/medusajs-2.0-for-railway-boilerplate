@@ -1,7 +1,7 @@
 // lib/constants.ts
 export const ADMIN_CORS = process.env.ADMIN_CORS;
 export const AUTH_CORS = process.env.AUTH_CORS;
-export const BACKEND_URL = process.env.BACKEND_URL;
+export const BACKEND_URL = process.env.BACKEND_URL || 'http://localhost:9000';
 export const COOKIE_SECRET = process.env.COOKIE_SECRET;
 export const DATABASE_URL = process.env.DATABASE_URL;
 export const JWT_SECRET = process.env.JWT_SECRET;

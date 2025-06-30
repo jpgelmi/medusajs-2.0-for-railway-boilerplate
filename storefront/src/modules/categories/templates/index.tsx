@@ -35,6 +35,7 @@ export default function CategoryTemplate({
     >
       <RefinementList sortBy={sort} data-testid="sort-by-container" />
       <div className="w-full">
+        {/* Breadcrumb - SIN elementos anidados problemáticos */}
         <div className="flex flex-row mb-8 text-2xl-semi gap-4">
           {parents &&
             parents.map((parent) => (
@@ -51,24 +52,30 @@ export default function CategoryTemplate({
             ))}
           <h1 data-testid="category-page-title">{category.name}</h1>
         </div>
+        
+        {/* Descripción - USANDO DIV en lugar de cualquier Text component */}
         {category.description && (
           <div className="mb-8 text-base-regular">
-            <p>{category.description}</p>
+            <div>{category.description}</div>
           </div>
         )}
-        {category.category_children && (
+        
+        {/* Subcategorías - ESTRUCTURA PLANA SIN anidado problemático */}
+        {category.category_children && category.category_children.length > 0 && (
           <div className="mb-8 text-base-large">
-            <ul className="grid grid-cols-1 gap-2">
-              {category.category_children?.map((c) => (
-                <li key={c.id}>
+            <div className="grid grid-cols-1 gap-2">
+              {category.category_children.map((c) => (
+                <div key={c.id}>
                   <InteractiveLink href={`/categories/${c.handle}`}>
                     {c.name}
                   </InteractiveLink>
-                </li>
+                </div>
               ))}
-            </ul>
+            </div>
           </div>
         )}
+        
+        {/* Productos */}
         <Suspense fallback={<SkeletonProductGrid />}>
           <PaginatedProducts
             sortBy={sort}
